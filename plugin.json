@@ -1,0 +1,11 @@
+{
+  "name" : "pages",
+  "display_name": "Limbs Pages",
+  "file": "pages.php",
+  "author": "Saqib Razzaq",
+  "autor_website": "https://github.com/saqirzzq",
+  "date": "2019, 03, 21",
+  "description": "BriskLimbs pages manager",
+  "version": "0.1",
+  "state": "Beta"
+}

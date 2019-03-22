@@ -1,0 +1,83 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style type="text/css">
+  .dropdown-menu li a {
+    padding: 8px 15px;
+    color: #5f5f5f;
+    font-size: 14px;
+    display: block;
+  }
+</style>
+
+<div class="content-wrapper bg-light">
+  <div class="col-12 grid-margin">
+    {% if message %}
+      <div class="alert alert-success">{{message}}</div>
+    {% endif %}
+
+    {% for error in _errors %}
+      <div class="alert alert-danger">{{error}}</div>
+    {% endfor %}
+
+    <!-- content here -->
+
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Manage Pages</h4>
+        <p class="card-description mb-2">Listing: {{total}}</p>
+          {% if results %}
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Slug</th>
+                  <th>Published</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+            {% for page in results %}
+              <tr>
+                <td>{{page.id}}</td>
+                <td>
+                  {{page.title}}
+                  <span class="clearfix"></span>
+                  <label class="mt-2 badge badge-{% if page.status == 'active' %}success{% else %}danger{% endif %}">{{page.status}}</label>
+                </td>
+                <td>{{page.slug}}</td>
+                <td>{{formatDate(page.published)}}</td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn btn-gradient-primary btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      Actions
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      {% if page.status == 'active' %}
+                        <li><a href="{{_adminUrl}}/page/?path=pages|pages|manage.php&deactivate={{page.id}}">Deactivate</a></li>
+                      {% else %}
+                        <li><a href="{{_adminUrl}}/page/?path=pages|pages|manage.php&activate={{page.id}}">Activate</a></li>
+                      {% endif %}
+                      <li><a href="{{_adminUrl}}/page/?path=pages|pages|add.php&edit={{page.id}}">Edit</a></li>
+                      <li class="divider"></li>
+                      <li><a href="{{_adminUrl}}/page/?path=pages|pages|manage.php&delete={{page.id}}">Delete</a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr><div class="alert alert-warning">No results found</div></tr>
+          {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+{% endblock %}
